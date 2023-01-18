@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { todoListState } from "../globalStates/atom";
+import { todoListState } from "../atoms/states";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 
 export type todoType = { id: number; title: string };
 
-const TodoCreate = () => {
+const TodoCreate: React.FC = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [todoId, setTodoId] = useState<number>(1);
   const [todoTitle, setTodoTitle] = useState<string>("");
+
   const handleTodoAdd = () => {
     setTodoList([...todoList, { id: todoId, title: todoTitle }]);
     setTodoId(todoId + 1);
