@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { todoListState } from "../globalStates/atom";
+import { todoListState } from "../atoms/states";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 
 export type todoType = { id: number; title: string };
