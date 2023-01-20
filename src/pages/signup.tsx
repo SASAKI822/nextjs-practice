@@ -6,11 +6,28 @@ import { TextField, Button } from "@mui/material";
 // firebase
 import { app } from "../lib/firebase";
 import { auth } from "../lib/firebase";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 const SignUp: React.FC = () => {
+  const provider = new GoogleAuthProvider();
+  const googleRegister = async (e: any) => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        router.push("/mypage");
+        const userObject = result.user;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const router = useRouter();
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -26,7 +43,7 @@ const SignUp: React.FC = () => {
         const userObject = result.user;
 
         // ユーザーネーム
-        const name = (userObject.displayName = username);
+        // const name = (userObject.displayName = username);
       })
       .catch((error) => {
         console.log(error);
@@ -70,6 +87,13 @@ const SignUp: React.FC = () => {
           sx={{ display: "block" }}
         >
           新規登録
+        </Button>
+        <Button
+          type="submit"
+          onClick={googleRegister}
+          sx={{ display: "block" }}
+        >
+          Google新規登録
         </Button>
         <Link href="/signin">サインインはこちら</Link>
       </div>

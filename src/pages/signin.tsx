@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Inter } from "@next/font/google";
-import { signInWithEmailAndPassword, signOut } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
 import { Button, TextField } from "@mui/material";
 import { auth } from "../lib/firebase";
 import { useRouter } from "next/router";
@@ -22,6 +27,16 @@ const Signin: React.FC = () => {
         alert(error);
         console.log(error);
       });
+  };
+
+  const handleGoogleSignin = async () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider).then((result) => {
+      const credential: any = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      console.log(token);
+      router.push("/mypage");
+    });
   };
 
   return (
@@ -48,6 +63,13 @@ const Signin: React.FC = () => {
 
       <Button type="submit" onClick={handleSignin} sx={{ display: "block" }}>
         ログイン
+      </Button>
+      <Button
+        type="submit"
+        onClick={handleGoogleSignin}
+        sx={{ display: "block" }}
+      >
+        Googleでログイン
       </Button>
       <Link href="/signup">登録はこちら</Link>
     </div>

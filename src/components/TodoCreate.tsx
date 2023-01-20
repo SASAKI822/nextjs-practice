@@ -10,7 +10,7 @@ const TodoCreate = () => {
   const [todoTitle, setTodoTitle] = useState<string>("");
   const handleTodoAdd = () => {
     setTodoList([...todoList, { id: todoId, title: todoTitle }]);
-    setTodoId(todoId + 1);
+    setTodoId(todoList.length + 1);
     setTodoTitle("");
   };
 
