@@ -5,9 +5,7 @@ import TodoCreate from "../../components/TodoCreate";
 const Todos_create = () => {
   return (
     <>
-      <RecoilRoot>
-        <TodoCreate />
-      </RecoilRoot>
+      <TodoCreate />
     </>
   );
 };

@@ -3,7 +3,7 @@ import { auth } from "../lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import React from "react";
-
+console.log("sd");
 const Mypage = () => {
   const router = useRouter();
   const user: any = auth.currentUser;
