@@ -8,7 +8,6 @@ const TodoList = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const router = useRouter();
 
-  console.log(todoList);
   return (
     <>
       <h2>TodoList</h2>
@@ -16,8 +15,8 @@ const TodoList = () => {
         {todoList.map((item: any) => (
           <Link
             href={{
-              pathname: "/todos/[pid]",
-              query: { pid: item.id, ptitle: item.title },
+              pathname: `/todos/${item.id}`,
+              query: { title: item.title },
             }}
             key={item.id}
           >
