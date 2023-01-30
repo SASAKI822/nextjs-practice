@@ -6,17 +6,11 @@ import Link from "next/link";
 import { idText } from "typescript";
 import { ListItem } from "@mui/material";
 
-type StatusPageProps = { status: Status };
-type Status = {
-  id: string;
-  title: string;
-};
-
 const TodoId = () => {
   const router = useRouter();
-  const routeDetail = router.query;
-  const routerDetailId = router.query.id;
-  console.log(router.query);
+  const routeDetail: any = router.query;
+  const routerDetailId: number = routeDetail.id;
+
   return (
     <>
       <h2>Todo詳細</h2>
@@ -30,7 +24,7 @@ const TodoId = () => {
       <Link
         href={{
           pathname: `/todos/${routerDetailId}/edit`,
-          query: { title: routeDetail.title },
+          query: { id: routeDetail.id, title: routeDetail.title },
         }}
       >
         編集

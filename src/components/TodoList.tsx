@@ -11,19 +11,23 @@ const TodoList = () => {
   return (
     <>
       <h2>TodoList</h2>
+
       <ul>
-        {todoList.map((item: any) => (
-          <Link
-            href={{
-              pathname: `/todos/${item.id}`,
-              query: { title: item.title },
-            }}
-            key={item.id}
-          >
-            <li>{item.title}</li>
-          </Link>
+        {todoList.map((item: { id: number; title: string }) => (
+          <>
+            <Link
+              href={{
+                pathname: `/todos/${item.id}`,
+                query: { id: item.id, title: item.title },
+              }}
+              key={item.id}
+            >
+              <li>{item.title}</li>
+            </Link>
+          </>
         ))}
       </ul>
+      <Link href="/todos/create">Todo作成する</Link>
     </>
   );
 };

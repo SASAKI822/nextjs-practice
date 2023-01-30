@@ -8,7 +8,6 @@ export type todoType = { id: number; title: string };
 const TodoCreate = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [todoId, setTodoId] = useState<number>(todoList.length);
-  const [status, setStatus] = useState<any>("未着手");
   const [todoTitle, setTodoTitle] = useState<string>("");
   const handleTodoAdd = () => {
     setTodoList([...todoList, { id: todoId, title: todoTitle }]);

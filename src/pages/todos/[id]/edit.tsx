@@ -1,32 +1,47 @@
 import { todoListState } from "@/atoms/states";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { todoType } from "@/components/TodoCreate";
 
 const edit = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
-  const [editText, setEditText] = useState("");
+  const [editTodo, setEditTodo] = useState<todoType>({ id: 0, title: "" });
+  const [editText, setEditText] = useState<any>("");
   const router = useRouter();
+  const routeDetail: any = router.query;
+  const routeDetailId: any = router.query.id;
+  const NumRouteDetailId: number = parseInt(routeDetailId);
   // 編集機能
+  useEffect(() => {
+    setEditTodo({ id: NumRouteDetailId, title: routeDetail.title });
+  }, []);
+
+  console.log(editTodo);
+
   const handleEdit = () => {
     setTodoList((todoList: any) =>
-      todoList.map((todoItem: any) =>
-        todoItem.id === 0 ? { id: todoItem.id, title: editText } : todoItem
+      todoList.map((todoItem: { id: number; title: string }) =>
+        todoItem.id === editTodo.id
+          ? { id: todoItem.id, title: editText }
+          : todoItem
       )
     );
-    console.log(router.query.id);
   };
 
   const handleEditChange = (e: any) => {
     setEditText(e.target.value);
   };
 
-  console.log(todoList);
   return (
     <>
-      {router.query.title}
-      <input type="text" value={editText} onChange={handleEditChange} />
+      <input
+        type="text"
+        value={editText}
+        onChange={handleEditChange}
+        placeholder={editTodo.title}
+      />
       <button onClick={handleEdit}>編集</button>
       <Link href="/todos">todoリストへ</Link>
     </>
