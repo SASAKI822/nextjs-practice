@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { todoListState } from "../atoms/states";
 import { useRecoilState } from "recoil";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { collection, getDocs, QuerySnapshot } from "firebase/firestore";
+import { db } from "lib/firebase";
 
 const TodoList = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const router = useRouter();
+
+  useEffect(() => {
+    const getAllDocData = async () => {
+      const todoCollectionRef = collection(db, "todo");
+      getDocs(todoCollectionRef).then((querySnapshot) => {
+        querySnapshot.forEach((docs) => {
+          const doc = docs.data();
+          console.log(doc);
+        });
+      });
+    };
+  }, []);
 
   return (
     <>

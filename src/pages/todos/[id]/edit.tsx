@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { todoType } from "@/components/TodoCreate";
+import { Button } from "@mui/material";
 
 const edit = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
@@ -42,7 +43,7 @@ const edit = () => {
         onChange={handleEditChange}
         placeholder={editTodo.title}
       />
-      <button onClick={handleEdit}>編集</button>
+      <Button onClick={handleEdit}>編集</Button>
       <Link href="/todos">todoリストへ</Link>
     </>
   );

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { todoListState } from "../atoms/states";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
+import { Button } from "@mui/material";
 
 export type todoType = { id: number; title: string };
 
@@ -23,7 +24,7 @@ const TodoCreate = () => {
         onChange={(e) => setTodoTitle(e.target.value)}
         value={todoTitle}
       />
-      <button onClick={handleTodoAdd}>作成</button>
+      <Button onClick={handleTodoAdd}>作成</Button>
 
       <Link href="/todos">todoリスト</Link>
     </>
