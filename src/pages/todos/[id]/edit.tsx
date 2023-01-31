@@ -21,9 +21,12 @@ const edit = () => {
     setEditTodo({ id: NumRouteDetailId, title: routeDetail.title });
   }, []);
 
-  console.log(editTodo);
-
-  const handleEdit = async () => {
+  const handleEdit = async (id: any) => {
+    const todoDocumentRef = doc(db, "todo", id);
+    await updateDoc(todoDocumentRef, {
+      title: editText,
+    });
+    console.log(todoDocumentRef);
     setTodoList((todoList: any) =>
       todoList.map((todoItem: { id: number; title: string }) =>
         todoItem.id === editTodo.id
