@@ -11,17 +11,12 @@ const TodoList = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const getAllDocData = async () => {
-      const todoCollectionRef = collection(db, "todo");
-      getDocs(todoCollectionRef).then((querySnapshot) => {
-        querySnapshot.forEach((docs) => {
-          const doc = docs.data();
-          console.log(doc);
-        });
-      });
-    };
+    const todoCollectionRef = collection(db, "todo");
+    getDocs(todoCollectionRef).then((querySnapshot) => {
+      setTodoList(querySnapshot.docs.map((doc) => ({ ...doc.data() })));
+    });
   }, []);
-
+  console.log(todoList);
   return (
     <>
       <h2>TodoList</h2>

@@ -5,7 +5,9 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { todoType } from "@/components/TodoCreate";
 import { Button } from "@mui/material";
-
+import { db } from "lib/firebase";
+import { doc, updateDoc } from "firebase/firestore";
+import { async } from "@firebase/util";
 const edit = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
   const [editTodo, setEditTodo] = useState<todoType>({ id: 0, title: "" });
@@ -21,7 +23,7 @@ const edit = () => {
 
   console.log(editTodo);
 
-  const handleEdit = () => {
+  const handleEdit = async () => {
     setTodoList((todoList: any) =>
       todoList.map((todoItem: { id: number; title: string }) =>
         todoItem.id === editTodo.id

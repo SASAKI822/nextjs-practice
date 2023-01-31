@@ -8,6 +8,15 @@ import { ListItem } from "@mui/material";
 import { useRecoilState } from "recoil";
 import { todoListState } from "@/atoms/states";
 import { todoType } from "@/components/TodoCreate";
+import { db } from "lib/firebase";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 
 const TodoId = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
@@ -17,10 +26,20 @@ const TodoId = () => {
   const routeDetail: any = router.query;
   const routeDetailId: any = router.query.id;
   const NumRouteDetailId: number = parseInt(routeDetailId);
-  const handleDeleteTodo = (deleteTodo: todoType) => {
-    setTodoList(todoList.filter((todo: todoType) => deleteTodo.id !== todo.id));
-    console.log(todoList);
+
+  // 削除
+  const handleDeleteTodo = async (deleteTodo: todoType) => {
+    const userCollectionRef = collection(db, "todo");
+    const q = query(userCollectionRef, where("id", "==", NumRouteDetailId));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach(async (document) => {
+      const todoDocumentRef = doc(db, "todo", document.id);
+      await deleteDoc(todoDocumentRef);
+      console.log(todoDocumentRef);
+    });
   };
+
   useEffect(() => {
     setDeleteTodo({ id: NumRouteDetailId, title: routeDetail.title });
   }, []);
