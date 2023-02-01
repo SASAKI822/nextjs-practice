@@ -6,7 +6,14 @@ import Link from "next/link";
 import { todoType } from "@/components/TodoCreate";
 import { Button } from "@mui/material";
 import { db } from "lib/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { async } from "@firebase/util";
 const edit = () => {
   const [todoList, setTodoList] = useRecoilState<any>(todoListState);
@@ -22,18 +29,19 @@ const edit = () => {
   }, []);
 
   const handleEdit = async (id: any) => {
-    const todoDocumentRef = doc(db, "todo", id);
-    await updateDoc(todoDocumentRef, {
-      title: editText,
-    });
-    console.log(todoDocumentRef);
-    setTodoList((todoList: any) =>
-      todoList.map((todoItem: { id: number; title: string }) =>
-        todoItem.id === editTodo.id
-          ? { id: todoItem.id, title: editText }
-          : todoItem
-      )
+    const todoCollectiontRef = collection(db, "todo");
+    const q: any = query(
+      todoCollectiontRef,
+      where("id", "==", NumRouteDetailId)
     );
+    const querySnapshot = await getDocs(q);
+    console.log(querySnapshot);
+    querySnapshot.forEach(async (document) => {
+      const todoDocumentRef = doc(db, "todo", document.id);
+      await updateDoc(todoDocumentRef, {
+        title: editText,
+      });
+    });
   };
 
   const handleEditChange = (e: any) => {

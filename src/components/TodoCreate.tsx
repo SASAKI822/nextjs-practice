@@ -2,7 +2,7 @@ import { useState } from "react";
 import { todoListState } from "../atoms/states";
 import { atom, useRecoilState, useRecoilValue } from "recoil";
 import Link from "next/link";
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "lib/firebase";
 import { idText } from "typescript";
@@ -30,14 +30,19 @@ const TodoCreate = () => {
   return (
     <>
       <h2>TodoCreate</h2>
-      <input
+      <TextField
         type="text"
         onChange={(e) => setTodoTitle(e.target.value)}
         value={todoTitle}
+        id="outlined-basic"
+        label="Outlined"
+        variant="outlined"
       />
-      <Button onClick={handleTodoAdd}>作成</Button>
 
-      <Link href="/todos">todoリスト</Link>
+      <Button onClick={handleTodoAdd}>作成</Button>
+      <Button href="#text-buttons">
+        <Link href="/todos">todoリスト</Link>
+      </Button>
     </>
   );
 };
